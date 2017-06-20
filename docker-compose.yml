@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkins:2.46.3-alpine
+    ports:
+      - 8080:8080
+    links:
+      - ldap
+    volumes:
+      - ./.jenkins:/var/jenkins_home
+  nginx:
+    image: nginx
+    volumes:
+      - ./configs/jenkins.template:/etc/nginx/conf.d/jenkins.conf
+    ports: 
+      - 80:80
+    links:
+      - jenkins
+  ldap:
+    image: lavcraft/slapd:test
+    ports:
+      - 10389:389
