@@ -21,3 +21,13 @@ services:
     image: lavcraft/slapd:test
     ports:
       - 10389:389
+
+  juseppe:
+    image: lanwen/juseppe
+    ports:
+      - 9030:8080
+    volumes:
+      - ./.juseppe:/juseppe/plugins
+    environment:
+      JUSEPPE_BASE_URI: "http://juseppe:8080"
+
