@@ -1,14 +1,23 @@
 version: '3'
 
 services:
-  jenkins:
-    image: jenkins:2.46.3-alpine
+  jenkins0:
+    image: jenkins:2.46.3
     ports:
       - 8080:8080
     links:
       - ldap
+      - socatdockersock
+    privileged: true
     volumes:
       - ./.jenkins:/var/jenkins_home
+
+  socatdockersock:
+    image: bobrik/socat:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: TCP4-LISTEN:2375,fork,reuseaddr UNIX-CONNECT:/var/run/docker.sock
+ 
   nginx:
     image: nginx
     volumes:
@@ -16,7 +25,8 @@ services:
     ports: 
       - 80:80
     links:
-      - jenkins
+      - jenkins0
+
   ldap:
     image: lavcraft/slapd:test
     ports:
