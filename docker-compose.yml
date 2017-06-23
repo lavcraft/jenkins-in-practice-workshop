@@ -11,6 +11,19 @@ services:
     privileged: true
     volumes:
       - ./.jenkins:/var/jenkins_home
+      - ./.jenkins-backup:/var/jenkins_backup
+
+  jenkins1:
+    image: jenkins:2.46.3
+    ports:
+      - 8090:8080
+    links:
+      - ldap
+      - socatdockersock
+    privileged: true
+    volumes:
+      - ./.jenkins1:/var/jenkins_home
+      - ./.jenkins-backup:/var/jenkins_backup
 
   socatdockersock:
     image: bobrik/socat:latest
@@ -26,6 +39,7 @@ services:
       - 80:80
     links:
       - jenkins0
+      - jenkins1
 
   ldap:
     image: lavcraft/slapd:test
@@ -40,4 +54,3 @@ services:
       - ./.juseppe:/juseppe/plugins
     environment:
       JUSEPPE_BASE_URI: "http://juseppe:8080"
-
