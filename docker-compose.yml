@@ -52,6 +52,13 @@ services:
     volumes:
       - ./.bitbucket:/var/atlassian/application-data/bitbucket
 
+  nexus:
+    image: sonatype/nexus3:latest
+    ports:
+      - 8000:8081
+    volumes:
+      - ./.nexus:/nexus-data
+
   ldap:
     image: lavcraft/slapd:test
     ports:
