@@ -44,6 +44,14 @@ services:
       - jenkins0
       - jenkins1
 
+  bitbucket:
+    image: atlassian/bitbucket-server:latest
+    ports:
+      - 7999:7999
+      - 7990:7990
+    volumes:
+      - ./.bitbucket:/var/atlassian/application-data/bitbucket
+
   ldap:
     image: lavcraft/slapd:test
     ports:
