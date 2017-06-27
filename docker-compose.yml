@@ -5,6 +5,7 @@ services:
     image: jenkins:2.46.3
     ports:
       - 8080:8080
+      - 9010:9010
     links:
       - ldap
       - socatdockersock
@@ -12,6 +13,8 @@ services:
     volumes:
       - ./.jenkins0:/var/jenkins_home
       - ./.jenkins-backup:/var/jenkins_backup
+    environment:
+      JAVA_OPTS: "-Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.rmi.port=9010 -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
 
   jenkins1:
     image: jenkins:2.46.3
@@ -30,12 +33,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: TCP4-LISTEN:2375,fork,reuseaddr UNIX-CONNECT:/var/run/docker.sock
- 
+
   nginx:
     image: nginx
     volumes:
       - ./configs/jenkins.template:/etc/nginx/conf.d/jenkins.conf
-    ports: 
+    ports:
       - 80:80
     links:
       - jenkins0
