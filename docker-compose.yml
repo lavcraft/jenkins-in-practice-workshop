@@ -56,6 +56,7 @@ services:
     image: sonatype/nexus3:latest
     ports:
       - 8000:8081
+      - 20000:20000
     volumes:
       - ./.nexus:/nexus-data
 
