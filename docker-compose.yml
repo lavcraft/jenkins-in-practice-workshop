@@ -60,6 +60,17 @@ services:
     volumes:
       - ./.nexus:/nexus-data
 
+  sonar:
+    image: sonarqube:6.4-alpine
+    ports:
+      - 9000:9000
+      - 9092:9092
+    volumes:
+      - ./.sonarqube/conf:/opt/sonarqube/conf
+      - ./.sonarqube/data:/opt/sonarqube/data
+      - ./.sonarqube/extensions:/opt/sonarqube/extensions
+      - ./.sonarqube/plugins:/opt/sonarqube/lib/bundled-plugins
+
   ldap:
     image: lavcraft/slapd:test
     ports:
