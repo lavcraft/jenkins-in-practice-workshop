@@ -13,6 +13,8 @@ services:
     volumes:
       - ./.jenkins0:/var/jenkins_home
       - ./.jenkins-backup:/var/jenkins_backup
+      - ./.jenkins-workspace:/home/jenkins
+      - ./.jenkins-workspace/.jenkins:/home/jenkins/.jenkins
     environment:
       JAVA_OPTS: "-Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.rmi.port=9010 -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
 
@@ -66,10 +68,10 @@ services:
       - 9000:9000
       - 9092:9092
     volumes:
-      - ./.sonarqube/conf:/opt/sonarqube/conf
-      - ./.sonarqube/data:/opt/sonarqube/data
-      - ./.sonarqube/extensions:/opt/sonarqube/extensions
-      - ./.sonarqube/plugins:/opt/sonarqube/lib/bundled-plugins
+      - ./.sonarqube_new/conf:/opt/sonarqube/conf
+      - ./.sonarqube_new/data:/opt/sonarqube/data
+      - ./.sonarqube_new/extensions:/opt/sonarqube/extensions
+      - ./.sonarqube_new/plugins:/opt/sonarqube/lib/bundled-plugins
 
   ldap:
     image: lavcraft/slapd:test
